@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Made In Guam TV - Outro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            font-family: 'Orbitron', sans-serif;
+            background: #000;
+        }
+
+        /* Cyberpunk Sunset Background */
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #e94560 100%);
+            z-index: -2;
+        }
+
+        .sunset-glow {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150%;
+            height: 60%;
+            background: radial-gradient(ellipse at center, rgba(233, 69, 96, 0.4) 0%, rgba(255, 107, 107, 0.2) 40%, transparent 70%);
+            z-index: -1;
+            filter: blur(40px);
+        }
+
+        /* Grid Floor - Retro Style */
+        .grid-floor {
+            position: fixed;
+            bottom: 0;
+            left: -50%;
+            width: 200%;
+            height: 50%;
+            background-image: 
+                linear-gradient(to right, rgba(0, 255, 255, 0.3) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 255, 255, 0.3) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg);
+            transform-origin: bottom;
+            animation: gridMove 20s linear infinite;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+        }
+
+        /* Scanlines */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.3) 2px,
+                rgba(0, 0, 0, 0.3) 4px
+            );
+            z-index: 50;
+            pointer-events: none;
+            animation: scanlineFlicker 0.15s infinite;
+        }
+
+        @keyframes scanlineFlicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.98; }
+        }
+
+        /* Main Container */
+        .outro-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        /* Content Card */
+        .content-card {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            border-radius: 20px;
+            padding: 40px 60px;
+            text-align: center;
+            box-shadow: 
+                0 0 50px rgba(0, 255, 255, 0.3),
+                inset 0 0 50px rgba(0, 255, 255, 0.1);
+            opacity: 0;
+            transform: scale(0.9);
+            animation: cardEnter 1s ease-out forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #00ffff, #ff00ff);
+            z-index: -1;
+            border-radius: 20px;
+            animation: borderRotate 4s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes cardEnter {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes borderRotate {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        /* Glitch Text Effect */
+        .glitch-text {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.5rem;
+            color: #fff;
+            text-shadow: 
+                0 0 10px #00ffff,
+                0 0 20px #00ffff,
+                0 0 40px #00ffff;
+            position: relative;
+            animation: glitch 2s infinite;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -2px 0 #ff00ff;
+            animation: glitch-1 0.3s infinite linear alternate-reverse;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        }
+
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: 2px 0 #00ffff;
+            animation: glitch-2 0.3s infinite linear alternate-reverse;
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+        }
+
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-5px, 2px); }
+            94% { transform: translate(5px, -2px); }
+            96% { transform: translate(-2px, 5px); }
+        }
+
+        @keyframes glitch-1 {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-5px); }
+        }
+
+        @keyframes glitch-2 {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(5px); }
+        }
+
+        /* Schedule Styling */
+        .schedule-box {
+            background: rgba(233, 69, 96, 0.2);
+            border: 2px solid rgba(233, 69, 96, 0.6);
+            border-radius: 10px;
+            padding: 20px 30px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .schedule-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .schedule-label {
+            font-size: 0.8rem;
+            color: #00ffff;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .schedule-time {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(233, 69, 96, 0.8);
+            line-height: 1.6;
+        }
+
+        /* Social Links */
+        .social-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.05);
+            border-color: currentColor;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .social-link.twitch:hover {
+            color: #9146ff;
+            box-shadow: 0 0 30px rgba(145, 70, 255, 0.5);
+        }
+
+        .social-link.youtube:hover {
+            color: #ff0000;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+        }
+
+        .social-link svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .social-name {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        /* Insert Coin Screen */
+        .insert-coin-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            flex-direction: column;
+        }
+
+        .insert-coin-screen.active {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .arcade-bezel {
+            width: 90%;
+            max-width: 600px;
+            height: 300px;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 50%, #2a2a2a 100%);
+            border-radius: 20px;
+            border: 8px solid #444;
+            box-shadow: 
+                inset 0 0 50px rgba(0,0,0,0.8),
+                0 0 50px rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .coin-slot-container {
+            text-align: center;
+            position: relative;
+        }
+
+        .coin-slot {
+            width: 80px;
+            height: 120px;
+            background: linear-gradient(to right, #333 0%, #666 20%, #999 50%, #666 80%, #333 100%);
+            border-radius: 10px;
+            margin: 0 auto 20px;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            overflow: hidden;
+        }
+
+        .coin-slot-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 8px;
+            background: #000;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0,0,0,1);
+        }
+
+        /* Animated Coin */
+        .coin {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+        }
+
+        .coin.inserting {
+            animation: coinInsert 2s ease-in-out forwards;
+        }
+
+        @keyframes coinInsert {
+            0% {
+                top: -60px;
+                opacity: 0;
+                transform: translateX(-50%) rotateY(0deg);
+            }
+            20% {
+                top: 20px;
+                opacity: 1;
+                transform: translateX(-50%) rotateY(360deg);
+            }
+            80% {
+                top: 20px;
+                opacity: 1;
+                transform: translateX(-50%) rotateY(720deg);
+            }
+            100% {
+                top: 60px;
+                opacity: 0;
+                transform: translateX(-50%) rotateY(1080deg);
+            }
+        }
+
+        .coin-face {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+            border: 3px solid #b8860b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            color: #b8860b;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+
+        .insert-coin-text {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            color: #ff6b6b;
+            text-shadow: 0 0 20px rgba(255, 107, 107, 0.8);
+            animation: blink 1s infinite;
+            margin-top: 20px;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        .credit-display {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            color: #ffd700;
+            margin-top: 15px;
+            letter-spacing: 2px;
+        }
+
+        /* Particle Effects */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 10s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Skip Hint */
+        .skip-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.5);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+            z-index: 20;
+            text-transform: uppercase;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Fade out animation */
+        .fade-out {
+            animation: fadeOut 1s ease forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .glitch-text {
+                font-size: 1.5rem;
+            }
+            .content-card {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            .social-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-bg"></div>
+    <div class="sunset-glow"></div>
+    <div class="grid-floor"></div>
+    <div class="scanlines"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="outro-container" id="mainScreen">
+        <div class="content-card">
+            <h1 class="glitch-text" data-text="THANKS FOR WATCHING">THANKS FOR WATCHING</h1>
+            
+            <div class="schedule-box">
+                <div class="schedule-label">Streaming Schedule</div>
+                <div class="schedule-time">
+                    MON - FRI<br>
+                    12PM - 5PM<br>
+                    <span style="color: #e94560; font-size: 0.9em;">GAMING</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; color: #00ffff; font-size: 0.9rem; letter-spacing: 2px;">
+                FOLLOW FOR MORE
+            </div>
+
+            <div class="social-container">
+                <a href="#" class="social-link twitch" onclick="handleSocialClick(event)">
+                    <i data-lucide="twitch"></i>
+                    <span class="social-name">TWITCH</span>
+                </a>
+                <a href="#" class="social-link youtube" onclick="handleSocialClick(event)">
+                    <i data-lucide="youtube"></i>
+                    <span class="social-name">YOUTUBE</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="insert-coin-screen" id="insertCoinScreen">
+        <div class="arcade-bezel">
+            <div class="coin-slot-container">
+                <div class="coin-slot">
+                    <div class="coin-slot-inner"></div>
+                    <div class="coin" id="coin">
+                        <div class="coin-face">G</div>
+                    </div>
+                </div>
+                <div class="insert-coin-text" id="insertCoinText">INSERT COIN</div>
+                <div class="credit-display">CREDITS 00</div>
+            </div>
+        </div>
+        <div style="margin-top: 30px; color: rgba(255,255,255,0.5); font-size: 0.7rem; letter-spacing: 2px;">
+            PRESS SPACE TO REPLAY
+        </div>
+    </div>
+
+    <div class="skip-hint" id="skipHint">Click anywhere to Insert Coin</div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Create particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+            particle.style.animationDelay = (Math.random() * 5) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        let coinInserted = false;
+
+        // Auto transition to Insert Coin after 12 seconds
+        const autoTransition = setTimeout(() => {
+            if (!coinInserted) {
+                showInsertCoin();
+            }
+        }, 12000);
+
+        // Click to skip
+        document.addEventListener('click', (e) => {
+            if (!coinInserted) {
+                showInsertCoin();
+            }
+        });
+
+        // Space bar to replay
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                if (coinInserted) {
+                    location.reload(); // Refresh to restart
+                } else {
+                    showInsertCoin();
+                }
+            }
+        });
+
+        function handleSocialClick(e) {
+            e.preventDefault();
+            if (!coinInserted) {
+                showInsertCoin();
+            }
+        }
+
+        function showInsertCoin() {
+            if (coinInserted) return;
+            coinInserted = true;
+            clearTimeout(autoTransition);
+            
+            // Fade out main screen
+            const mainScreen = document.getElementById('mainScreen');
+            mainScreen.classList.add('fade-out');
+            
+            // Hide skip hint
+            document.getElementById('skipHint').style.display = 'none';
+
+            // Show Insert Coin screen after fade
+            setTimeout(() => {
+                mainScreen.style.display = 'none';
+                const insertCoinScreen = document.getElementById('insertCoinScreen');
+                insertCoinScreen.classList.add('active');
+                
+                // Start coin animation
+                setTimeout(() => {
+                    document.getElementById('coin').classList.add('inserting');
+                    
+                    // Play sound effect visual feedback
+                    document.getElementById('insertCoinText').style.color = '#00ff00';
+                    setTimeout(() => {
+                        document.getElementById('insertCoinText').textContent = 'CREDITS 01';
+                        document.querySelector('.credit-display').textContent = 'THANKS FOR WATCHING!';
+                    }, 1800);
+                }, 500);
+            }, 1000);
+        }
+    </script>
+<script src="https://deepsite.hf.co/deepsite-badge.js"></script>
+</body>
+</html>
